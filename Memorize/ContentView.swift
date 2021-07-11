@@ -6,53 +6,80 @@
 //
 
 import SwiftUI
+
+struct ContentView: View {
 var theme_smileys=["😀","😃","😄","😁","🤣","😂","😅","😆","🥲","☺️","😊","😇","😌","😉","🙃","🙂","😍","🥰","😘","😗","😛","😋","😚","😙","😝","😜","🤪","🤨","🥸","😎","🤓","🧐"]
 var theme_flags=["🇪🇭","🇼🇫","🇻🇳","🇻🇪","🇻🇮","🇺🇿","🇻🇺","🇻🇦","🇺🇾","🇺🇸","🏴󠁧󠁢󠁷󠁬󠁳󠁿","🏴󠁧󠁢󠁳󠁣󠁴󠁿","🇺🇦","🇦🇪","🇬🇧","🏴󠁧󠁢󠁥󠁮󠁧󠁿","🇺🇬","🇹🇻","🇹🇨","🇹🇲","🇹🇴","🇹🇹","🇹🇳","🇹🇷"]
 var theme_transports=["🚗","🚕","🚙","🚌","🚑","🚓","🏎","🚎","🚒","🚐","🛻","🚚","🦽","🦯","🚜","🚛","🦼","🛴","🚲","🛵","🚔","🚨","🛺","🏍","🚍","🚘","🚖","🚡"]
 
-struct ContentView: View {
+
+
+
     var body: some View {
-        VStack {
-            VStack {
+                    var theme=theme_smileys
+                    VStack {
+                    
                 Text("Memorise")
                     .font(.largeTitle)
                     .foregroundColor(Color.green)
-                VStack{
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]){
-                        ForEach(theme_smileys[0..<6],id:\.self) { smiley in
-                            CardView(content:smiley)
+                ScrollView{
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 85))]){
+                        ForEach(theme[0..<24],id:\.self) { element in
+                            CardView(content:element)
                         }
                     }
                 }
                 Spacer()
-                ButtonView()
-            }
-
+                bottom_buttons
         }
     }
+                    var bottom_buttons: some View {
+                    HStack{
+                    Spacer()
+                                        VStack{
+                    Button{
+                    } label:{
+                    Image(systemName: "face.smiling")
+                    }.font(.largeTitle)
+                    .onTapGesture {
+                                        theme=theme_smileys
+                    }
+                                                            Text("Smileys")
+                                                                                .font(.footnote)
+                                        }
+                    Spacer()
+                                        VStack{
+                    Button{
+                    } label:{
+                    Image(systemName: "car.circle")
+                    }.font(.largeTitle)
+                    .onTapGesture {
+                                        theme=theme_transports
+                    }
+                                                            Text("Cars")
+                                                                                .font(.footnote)
+                                        }
+                    Spacer()
+                                        VStack{
+                                        Button{
+                    } label:{
+                    Image(systemName: "flag.circle")
+                    }.font(.largeTitle)
+                    .onTapGesture {
+                                        theme=theme_flags
+                    }
+                                                            Text("Flags")
+                                                                                .font(.footnote)
+                    }
+                    Spacer()
+                    }.padding()
+                    }
 }
 
-struct ButtonView: View {
-    var body: some View {
-        HStack{
-            Button{
-            } label:{
-                Image(systemName: "face.smiling")
-            }
-            Spacer()
-            Button{
-            } label:{
-                Image(systemName: "car.circle")
-            }
-            
-            Spacer()
-            Button{
-            } label:{
-                Image(systemName: "flag.circle")
-            }
-        }.padding()
-    }
-}
+
+
+
+
 struct CardView: View {
     var content:String
     @State var face_up:Bool=true
@@ -61,13 +88,12 @@ struct CardView: View {
             let shape=RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
             if face_up{
                 shape.fill().foregroundColor(.white)
-                shape.stroke(lineWidth: 5).foregroundColor(.green)
+                shape.strokeBorder(lineWidth: 5).foregroundColor(.green)
                 Text(content)
             }else {
                 shape.fill().foregroundColor(.green)
             }
         }.aspectRatio(2/3,contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-        .padding()
         .onTapGesture {
             face_up = !face_up
         }
@@ -82,12 +108,12 @@ struct CardView: View {
 
 
 
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .preferredColorScheme(.light)
+        ContentView()
+            .preferredColorScheme(.dark)
     }
 }
 
