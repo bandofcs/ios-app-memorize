@@ -13,39 +13,67 @@ var theme_transports=["🚗","🚕","🚙","🚌","🚑","🚓","🏎","🚎","�
 struct ContentView: View {
     var body: some View {
         VStack {
-            Text("Memorise")
-                .font(.largeTitle)
-                .foregroundColor(Color.green)
-            VStack{
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]){
-                    ForEach(theme_smileys[0..<6],id:\.self) { smiley in
-                        CardView(content:smiley)
+            VStack {
+                Text("Memorise")
+                    .font(.largeTitle)
+                    .foregroundColor(Color.green)
+                VStack{
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]){
+                        ForEach(theme_smileys[0..<6],id:\.self) { smiley in
+                            CardView(content:smiley)
+                        }
                     }
                 }
+                Spacer()
+                ButtonView()
             }
-            Spacer()
+
         }
     }
 }
 
-
-
-struct CardView: View {
-    var content:String
+struct ButtonView: View {
     var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                .fill()
-                .foregroundColor(.white)
-            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                .stroke(lineWidth: 5)
-                .foregroundColor(.green)
-            Text(content)
-                
-        }.aspectRatio(2/3,contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-        .padding()
+        HStack{
+            Button{
+            } label:{
+                Image(systemName: "face.smiling")
+            }
+            Spacer()
+            Button{
+            } label:{
+                Image(systemName: "car.circle")
+            }
+            
+            Spacer()
+            Button{
+            } label:{
+                Image(systemName: "flag.circle")
+            }
+        }.padding()
     }
 }
+struct CardView: View {
+    var content:String
+    @State var face_up:Bool=true
+    var body: some View {
+        ZStack{
+            let shape=RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+            if face_up{
+                shape.fill().foregroundColor(.white)
+                shape.stroke(lineWidth: 5).foregroundColor(.green)
+                Text(content)
+            }else {
+                shape.fill().foregroundColor(.green)
+            }
+        }.aspectRatio(2/3,contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+        .padding()
+        .onTapGesture {
+            face_up = !face_up
+        }
+    }
+}
+
 
 
 
