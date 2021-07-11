@@ -8,76 +8,88 @@
 import SwiftUI
 
 struct ContentView: View {
-var theme_smileys=["😀","😃","😄","😁","🤣","😂","😅","😆","🥲","☺️","😊","😇","😌","😉","🙃","🙂","😍","🥰","😘","😗","😛","😋","😚","😙","😝","😜","🤪","🤨","🥸","😎","🤓","🧐"]
-var theme_flags=["🇪🇭","🇼🇫","🇻🇳","🇻🇪","🇻🇮","🇺🇿","🇻🇺","🇻🇦","🇺🇾","🇺🇸","🏴󠁧󠁢󠁷󠁬󠁳󠁿","🏴󠁧󠁢󠁳󠁣󠁴󠁿","🇺🇦","🇦🇪","🇬🇧","🏴󠁧󠁢󠁥󠁮󠁧󠁿","🇺🇬","🇹🇻","🇹🇨","🇹🇲","🇹🇴","🇹🇹","🇹🇳","🇹🇷"]
-var theme_transports=["🚗","🚕","🚙","🚌","🚑","🚓","🏎","🚎","🚒","🚐","🛻","🚚","🦽","🦯","🚜","🚛","🦼","🛴","🚲","🛵","🚔","🚨","🛺","🏍","🚍","🚘","🚖","🚡"]
+    @State var theme_smileys=["😀","😃","😄","😁","🤣","😂","😅","😆","🥲","☺️","😊","😇","😌","😉","🙃","🙂","😍","🥰","😘","😗","😛","😋","😚","😙","😝","😜","🤪","🤨","🥸","😎","🤓","🧐"]
+    @State var theme_flags=["🇪🇭","🇼🇫","🇻🇳","🇻🇪","🇻🇮","🇺🇿","🇻🇺","🇻🇦","🇺🇾","🇺🇸","🏴󠁧󠁢󠁷󠁬󠁳󠁿","🏴󠁧󠁢󠁳󠁣󠁴󠁿","🇺🇦","🇦🇪","🇬🇧","🏴󠁧󠁢󠁥󠁮󠁧󠁿","🇺🇬","🇹🇻","🇹🇨","🇹🇲","🇹🇴","🇹🇹","🇹🇳","🇹🇷"]
+    @State var theme_transports=["🚗","🚕","🚙","🚌","🚑","🚓","🏎","🚎","🚒","🚐","🛻","🚚","🦽","🦯","🚜","🚛","🦼","🛴","🚲","🛵","🚔","🚨","🛺","🏍","🚍","🚘","🚖","🚡"]
 
-
-
-
+    @State var theme=1
+//MAIN CODE//
     var body: some View {
-                    var theme=theme_smileys
-                    VStack {
-                    
-                Text("Memorise")
-                    .font(.largeTitle)
-                    .foregroundColor(Color.green)
-                ScrollView{
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 85))]){
-                        ForEach(theme[0..<24],id:\.self) { element in
-                            CardView(content:element)
-                        }
-                    }
-                }
-                Spacer()
-                bottom_buttons
+        VStack { 
+            Text("Memorise")
+                .font(.largeTitle)
+                .foregroundColor(Color.green)
+            cardgrid
+            Spacer()
+            bottom_buttons
         }
     }
-                    var bottom_buttons: some View {
-                    HStack{
-                    Spacer()
-                                        VStack{
-                    Button{
-                    } label:{
-                    Image(systemName: "face.smiling")
-                    }.font(.largeTitle)
-                    .onTapGesture {
-                                        theme=theme_smileys
+//END OF MAIN CODE//
+	
+    var cardgrid: some View {
+        ScrollView{
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 85))]){
+                if theme==1{
+                    ForEach(theme_smileys[0..<24],id:\.self) { element in
+                        CardView(content:element)
                     }
-                                                            Text("Smileys")
-                                                                                .font(.footnote)
-                                        }
-                    Spacer()
-                                        VStack{
-                    Button{
-                    } label:{
-                    Image(systemName: "car.circle")
-                    }.font(.largeTitle)
-                    .onTapGesture {
-                                        theme=theme_transports
+                }
+                if theme==2{
+                    ForEach(theme_transports[0..<24],id:\.self) { element in
+                        CardView(content:element)
                     }
-                                                            Text("Cars")
-                                                                                .font(.footnote)
-                                        }
-                    Spacer()
-                                        VStack{
-                                        Button{
-                    } label:{
-                    Image(systemName: "flag.circle")
-                    }.font(.largeTitle)
-                    .onTapGesture {
-                                        theme=theme_flags
+                }
+                if theme==3{
+                    ForEach(theme_flags[0..<24],id:\.self) { element in
+                        CardView(content:element)
                     }
-                                                            Text("Flags")
-                                                                                .font(.footnote)
-                    }
-                    Spacer()
-                    }.padding()
-                    }
+                }
+            }
+        }
+    }
+	
+    var bottom_buttons: some View {
+        HStack{
+            Spacer()
+            VStack{
+                Button{
+	if theme != 1 {
+	    theme=1
+	    theme_smileys.shuffle()
+	}
+                } label:{Image(systemName: "face.smiling")}
+                .font(.largeTitle)
+                Text("Smileys")
+                    .font(.footnote)
+            }
+            Spacer()
+            VStack{
+                Button{
+	if theme != 2 {
+	    theme=2
+	    theme_transports.shuffle()
+	}
+                } label:{Image(systemName: "car.circle")}
+                .font(.largeTitle)
+                Text("Cars")
+                    .font(.footnote)
+            }
+            Spacer()
+            VStack{
+                Button{
+	if theme != 3 {
+	    theme=3
+	    theme_flags.shuffle()
+	}
+                } label:{Image(systemName: "flag.circle")}
+                .font(.largeTitle)
+                Text("Flags")
+                    .font(.footnote)
+            }
+            Spacer()
+        }.padding()
+    }
 }
-
-
-
 
 
 struct CardView: View {
@@ -99,13 +111,6 @@ struct CardView: View {
         }
     }
 }
-
-
-
-
-
-
-
 
 
 struct ContentView_Previews: PreviewProvider {
