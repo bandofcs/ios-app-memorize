@@ -13,18 +13,22 @@ struct ContentView: View {
     @State var theme_transports=["🚗","🚕","🚙","🚌","🚑","🚓","🏎","🚎","🚒","🚐","🛻","🚚","🦽","🦯","🚜","🚛","🦼","🛴","🚲","🛵","🚔","🚨","🛺","🏍","🚍","🚘","🚖","🚡"]
 
     @State var theme=1
+	
 //MAIN CODE//
     var body: some View {
         VStack { 
-            Text("Memorise")
-                .font(.largeTitle)
-                .foregroundColor(Color.green)
+            title
             cardgrid
-            Spacer()
             bottom_buttons
         }
     }
 //END OF MAIN CODE//
+	
+    var title: some View{
+        Text("Memorise")
+        .font(.largeTitle)
+        .foregroundColor(Color.green)
+    }
 	
     var cardgrid: some View {
         ScrollView{
@@ -115,8 +119,8 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .preferredColorScheme(.light)
+//        ContentView()
+//            .preferredColorScheme(.light)
         ContentView()
             .preferredColorScheme(.dark)
     }
