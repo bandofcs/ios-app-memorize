@@ -16,7 +16,7 @@ struct ContentView: View {
 	
 //MAIN CODE//
     var body: some View {
-        VStack { 
+        VStack {
             title
             cardgrid
             bottom_buttons
@@ -25,14 +25,14 @@ struct ContentView: View {
 //END OF MAIN CODE//
 	
     var title: some View{
-        Text("Memorise")
+        Text("Memorize!")
         .font(.largeTitle)
         .foregroundColor(Color.green)
     }
 	
     var cardgrid: some View {
         ScrollView{
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 85))]){
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 70))]){
                 if theme==1{
                     ForEach(theme_smileys[0..<24],id:\.self) { element in
                         CardView(content:element)
@@ -119,10 +119,9 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-//        ContentView()
-//            .preferredColorScheme(.light)
+        ContentView()
+            .preferredColorScheme(.light)
         ContentView()
             .preferredColorScheme(.dark)
     }
 }
-
